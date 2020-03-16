@@ -3,35 +3,93 @@
 namespace App\DataFixtures;
 
 use App\Entity\BlogPost;
+use App\Entity\Comment;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $passwordEncoder;
+
+    /**
+     * @var \Faker\Factory
+     */
+    private $faker;
+
+    public  function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+        $this->faker = \Faker\Factory::create();
+    }
+
     /**
      * Load data fixtures with the passed EntityManager
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
-        $blogPost = new BlogPost();
-        $blogPost->setTitle('Mon premier post');
-        $blogPost->setPublished(new \DateTime('2020-03-16 10:15:21'));
-        $blogPost->setContent('ceci est un test');
-        $blogPost->setAuthor('Auguinard kouame');
-        $blogPost->setSlug('mon-premier-post');
+        $this->loadUsers($manager);
+        $this->loadBlogPosts($manager);
+        $this->loadComments($manager);
+    }
 
-        $manager->persist($blogPost);
+    public function loadBlogPosts(ObjectManager $manager)
+    {
+        $user = $this->getReference('user_auguinard');
 
-        $blogPost = new BlogPost();
-        $blogPost->setTitle('Mon deuxième post');
-        $blogPost->setPublished(new \DateTime('2020-03-16 10:18:10'));
-        $blogPost->setContent('ceci est un deuxième test');
-        $blogPost->setAuthor('Shelly Aka');
-        $blogPost->setSlug('mon-deuxieme-post');
+        for($i = 0; $i < 100; $i++){
+            $blogPost = new BlogPost();
+            $blogPost->setTitle($this->faker->realText(30));
+            $blogPost->setPublished($this->faker->dateTimeThisYear);
+            $blogPost->setContent($this->faker->realText());
+            $blogPost->setAuthor($user);
+            $blogPost->setSlug($this->faker->slug);
 
-        $manager->persist($blogPost);
+            $this->setReference("blog_post_$i", $blogPost);
 
+            $manager->persist($blogPost);
+        }
+
+        $manager->flush();
+    }
+
+    public function loadComments(ObjectManager $manager)
+    {
+        for ($i = 0; $i < 100; $i++){
+            for ($j = 0; $j < rand(1, 10); $j++){
+                $comment = new Comment();
+                $comment->setContent($this->faker->realText());
+                $comment->setPublished($this->faker->dateTimeThisYear);
+                $comment->setAuthor($this->getReference('user_auguinard'));
+                $comment->setBlogPost($this->getReference("blog_post_$i"));
+
+                $manager->persist($comment);
+            }
+        }
+        $manager->flush();
+    }
+
+    public function loadUsers(ObjectManager $manager)
+    {
+        $user =  new  User();
+
+        $user->setUsername('auguinard');
+        $user->setName('Kouame Auguinard');
+        $user->setEmail('fck2645@gmail.com');
+
+        $user->setPassword($this->passwordEncoder->encodePassword(
+            $user,
+            'azerty123#'
+        ));
+
+        $this->addReference('user_auguinard', $user);
+
+        $manager->persist($user);
         $manager->flush();
     }
 }
