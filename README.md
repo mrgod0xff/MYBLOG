@@ -35,9 +35,12 @@ Configurez le chemin des clés SSH dans config/packages/lexik_jwt_authentication
 
 ``` yaml
   lexik_jwt_authentication:
-      secret_key:       '%kernel.project_dir%/config/jwt/private.pem' # requis pour la création de jetons
-      public_key:       '%kernel.project_dir%/config/jwt/public.pem'  # requis pour la vérification des jetons
-      pass_phrase:      'your_secret_passphrase' # pour la création de jetons, l'utilisation d'une variable d'environnement est recommandée
+      # requis pour la création de jetons
+      secret_key:       '%kernel.project_dir%/config/jwt/private.pem' 
+      # requis pour la vérification des jetons
+      public_key:       '%kernel.project_dir%/config/jwt/public.pem'  
+       # pour la création de jetons, l'utilisation d'une variable d'environnement est recommandée
+      pass_phrase:      'your_secret_passphrase'
       token_ttl:        3600
 ```
 
