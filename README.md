@@ -7,7 +7,7 @@ Fonctionnalités :
 * Tests unitaires (PHPUnit) et Tests fonctionnels (Behat)...
 
 ## EasyAdmin
-![Image de la page d'accueil](https://nsa40.casimages.com/img/2020/03/16/200316115038760405.png)
+![Image de la page d'accueil](https://nsa40.casimages.com/img/2020/03/17/200317015317513266.png)
 
 
 
