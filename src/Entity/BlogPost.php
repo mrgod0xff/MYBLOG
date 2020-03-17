@@ -5,10 +5,14 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BlogPostRepository")
- * @ApiResource()
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
 class BlogPost
 {
@@ -55,7 +59,10 @@ class BlogPost
         $this->comments = new ArrayCollection();
     }
 
-    public function getComments(): Collection
+    /**
+     * @return ArrayCollection|Collection
+     */
+    public function getComments()
     {
         return $this->comments;
     }
@@ -122,6 +129,7 @@ class BlogPost
 
     /**
      * @param User $author
+     * @return BlogPost
      */
     public function setAuthor(User $author): self
     {
@@ -129,7 +137,4 @@ class BlogPost
 
         return $this;
     }
-
-
-
 }

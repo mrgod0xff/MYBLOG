@@ -6,11 +6,28 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"post"},
+ *     normalizationContext={
+ *          "groups"={"read"}
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *     "username",
+ *     message="Le nom d'utilisateur existe déjà."
+ * )
+ * @UniqueEntity(
+ *     "email",
+ *     message="Cette adresse email est déjà utilisée pour un autre compte."
+ * )
  */
 class User implements UserInterface
 {
@@ -18,36 +35,78 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
+     * @Assert\NotBlank(
+     *     message="Vous aurez besoin d'un username pour vous connecté."
+     * )
+     * @Assert\Length(
+     *     min=6,
+     *     max=255,
+     *     minMessage="Cette valeur est trop courte. Le username doit contenir au moins 6 caractères."
+     * )
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *     message="Le mot de passe ne doit pas être vide."
+     * )
+     * @Assert\Regex(
+     *     pattern="/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])/",
+     *     message="Le mot de passe doit comporter sept caractères et contenir au moins un chiffre, une lettre majuscule et une lettre minuscule"
+     * )
      */
     private $password;
 
     /**
+     * @Assert\NotBlank(
+     *     message="Veillez saisir le même mot de passe, svp ne laisser pas ce champ vide."
+     * )
+     * @Assert\Expression(
+     *     "this.getPassword() === this.getRetypedPassword()",
+     *     message="Les mots de passe ne correspondent pas"
+     * )
+     */
+    private $retypedPassword;
+
+    /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
+     * @Assert\NotBlank(
+     *     message="Le nom ne doit pas être vide."
+     * )
+     * @Assert\Length(min=5, max=255)
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *     message="L'email ne doit pas être vide."
+     * )
+     * @Assert\Email(
+     *     message="Ceci n'est pas une adresse email."
+     * )
+     * @Assert\Length(min=6, max=255)
      */
     private $email;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\BlogPost", mappedBy="author")
+     * @Groups({"read"})
      */
     private $posts;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="author")
+     * @Groups({"read"})
      */
     private $comments;
 
@@ -152,4 +211,15 @@ class User implements UserInterface
     {
         // TODO: Implement eraseCredentials() method.
     }
+
+    public function getRetypedPassword()
+    {
+        return $this->retypedPassword;
+    }
+
+    public function setRetypedPassword($retypedPassword): void
+    {
+        $this->retypedPassword = $retypedPassword;
+    }
+
 }
