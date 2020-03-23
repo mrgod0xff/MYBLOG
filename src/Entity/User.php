@@ -13,10 +13,32 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     itemOperations={"get"},
- *     collectionOperations={"post"},
- *     normalizationContext={
- *          "groups"={"read"}
+ *     itemOperations={
+ *          "get"={
+ *              "access_control"="is_granted('IS_AUTHENTICATED_FULLY')",
+ *              "normalization_context"={
+ *                  "groups"={"get"}
+ *              }
+ *          },
+ *          "put"={
+ *              "access_control"="is_granted('IS_AUTHENTICATED_FULLY') and object == user",
+ *              "denormalization_context"={
+ *                  "groups"={"put"}
+ *              },
+ *               "normalization_context"={
+ *                  "groups"={"get"}
+ *              }
+ *          }
+ *      },
+ *     collectionOperations={
+ *      "post"={
+ *          "denormalization_context"={
+ *            "groups"={"post"}
+ *          },
+ *          "normalization_context"={
+ *             "groups"={"get"}
+ *         }
+ *       }
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -31,30 +53,32 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface
 {
+    const ROLE_COMMENTATOR = 'ROLE_COMMENTATOR';
+    const ROLE_WRITER = 'ROLE_WRITER';
+    const ROLE_EDITOR = 'ROLE_EDITOR';
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_SUPERADMIN = 'ROLE_SUPERADMIN';
+
+    const DEFAULT_ROLES = [self::ROLE_COMMENTATOR];
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"read"})
+     * @Groups({"get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read"})
-     * @Assert\NotBlank(
-     *     message="Vous aurez besoin d'un username pour vous connecté."
-     * )
-     * @Assert\Length(
-     *     min=6,
-     *     max=255,
-     *     minMessage="Cette valeur est trop courte. Le username doit contenir au moins 6 caractères."
-     * )
+     * @Groups({"get", "post", "get-comment-with-author", "get-blog-post-with-author"})
+     * @Assert\NotBlank(message="Vous aurez besoin d'un username pour vous connecté.")
+     * @Assert\Length(min=6, max=255, minMessage="Cette valeur est trop courte. Le username doit contenir au moins 6 caractères.")
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"put", "post"})
      * @Assert\NotBlank(
      *     message="Le mot de passe ne doit pas être vide."
      * )
@@ -66,6 +90,7 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @Groups({"put", "post"})
      * @Assert\NotBlank(
      *     message="Veillez saisir le même mot de passe, svp ne laisser pas ce champ vide."
      * )
@@ -78,7 +103,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read"})
+     * @Groups({"get", "post", "put"})
      * @Assert\NotBlank(
      *     message="Le nom ne doit pas être vide."
      * )
@@ -88,11 +113,11 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"post", "put", "get-comment-with-author", "get-blog-post-with-author"})
      * @Assert\NotBlank(
      *     message="L'email ne doit pas être vide."
      * )
-     * @Assert\Email(
-     *     message="Ceci n'est pas une adresse email."
+     * @Assert\Email(message="Ceci n'est pas une adresse email."
      * )
      * @Assert\Length(min=6, max=255)
      */
@@ -100,13 +125,13 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\BlogPost", mappedBy="author")
-     * @Groups({"read"})
+     * @Groups({"get"})
      */
     private $posts;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="author")
-     * @Groups({"read"})
+     * @Groups({"get"})
      */
     private $comments;
 
