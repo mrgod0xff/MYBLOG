@@ -2,27 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="883fb808-bafc-4722-9e11-9dfbfe5e6002" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/config/routes/jwt.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/AuthoredEntityInterface.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/PublishedDateEntityInterface.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/EventSubscriber/AuthoredEntitySubscriber.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/EventSubscriber/PublishedDateEntitySubscriber.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/ResetPasswordAction.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Security/TokenAuthenticator.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Serializer/UserAttributeNormalizer.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Serializer/UserContextBuilder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/BlogPost.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/BlogPost.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Comment.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Comment.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EventSubscriber/PasswordHashSubscriber.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventSubscriber/PasswordHashSubscriber.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200316132655.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,13 +184,9 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/EventSubscriber" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/EventSubscriber" />
-    </key>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -219,8 +207,13 @@
       <workItem from="1584441349793" duration="7355000" />
       <workItem from="1584580118488" duration="2628000" />
       <workItem from="1584704919477" duration="7782000" />
-      <workItem from="1584865480597" duration="11246000" />
-      <workItem from="1584957120856" duration="13393000" />
+      <workItem from="1584865480597" duration="11840000" />
+      <workItem from="1585258364492" duration="639000" />
+      <workItem from="1585261153725" duration="637000" />
+      <workItem from="1585343492798" duration="7252000" />
+      <workItem from="1585470360232" duration="6292000" />
+      <workItem from="1585499053781" duration="2397000" />
+      <workItem from="1585503337539" duration="10696000" />
     </task>
     <servers />
   </component>
@@ -232,26 +225,26 @@
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state x="401" y="188" width="620" height="417" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1299.741@67.27.1299.741" timestamp="1584580566723" />
-    <state x="491" y="115" width="446" height="562" key="#com.intellij.ide.util.MemberChooser" timestamp="1584443151141">
+    <state x="491" y="115" width="446" height="562" key="#com.intellij.ide.util.MemberChooser" timestamp="1585512690939">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="491" y="115" width="446" height="562" key="#com.intellij.ide.util.MemberChooser/67.27.1299.741@67.27.1299.741" timestamp="1584443151141" />
-    <state x="461" y="27" width="501" height="741" key="#com.jetbrains.php.refactoring.extractMethod.PhpExtractMethodDialog#method0" timestamp="1584960808124">
+    <state x="491" y="115" width="446" height="562" key="#com.intellij.ide.util.MemberChooser/67.27.1299.741@67.27.1299.741" timestamp="1585512690939" />
+    <state x="487" y="154" key="FileChooserDialogImpl" timestamp="1585261145777">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="461" y="27" width="501" height="741" key="#com.jetbrains.php.refactoring.extractMethod.PhpExtractMethodDialog#method0/67.27.1299.741@67.27.1299.741" timestamp="1584960808124" />
-    <state x="483" y="211" width="501" height="485" key="NewPhpClassDialog" timestamp="1584963548228">
+    <state x="487" y="154" key="FileChooserDialogImpl/67.27.1299.741@67.27.1299.741" timestamp="1585261145777" />
+    <state x="483" y="211" width="501" height="410" key="NewPhpClassDialog" timestamp="1585512542035">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="483" y="211" width="501" height="485" key="NewPhpClassDialog/67.27.1299.741@67.27.1299.741" timestamp="1584963548228" />
+    <state x="483" y="211" width="501" height="410" key="NewPhpClassDialog/67.27.1299.741@67.27.1299.741" timestamp="1585512542035" />
     <state x="512" y="323" width="399" height="149" key="NewPhpFileDialog" timestamp="1584105602776">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state x="512" y="323" width="399" height="149" key="NewPhpFileDialog/67.27.1299.741@67.27.1299.741" timestamp="1584105602776" />
-    <state x="195" y="27" key="SettingsEditor" timestamp="1584957589858">
+    <state x="195" y="27" width="1012" height="735" key="SettingsEditor" timestamp="1585396952375">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="195" y="27" key="SettingsEditor/67.27.1299.741@67.27.1299.741" timestamp="1584957589858" />
+    <state x="195" y="27" width="1012" height="735" key="SettingsEditor/67.27.1299.741@67.27.1299.741" timestamp="1585396952375" />
     <state x="372" y="225" key="com.intellij.ide.util.TipDialog" timestamp="1584351212532">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
@@ -260,10 +253,6 @@
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state x="474" y="311" width="474" height="170" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1299.741@67.27.1299.741" timestamp="1584379569077" />
-    <state x="380" y="170" key="run.anything.popup" timestamp="1584960509645">
-      <screen x="67" y="27" width="1299" height="741" />
-    </state>
-    <state x="380" y="170" key="run.anything.popup/67.27.1299.741@67.27.1299.741" timestamp="1584960509645" />
     <state x="379" y="89" key="search.everywhere.popup" timestamp="1584343991983">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
